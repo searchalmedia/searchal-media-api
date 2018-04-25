@@ -9,6 +9,7 @@ var cors = require('cors');
 var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cors());
 
 // Router instance
 var router = express.Router();
@@ -24,7 +25,8 @@ var client = new Twitter({
 });
 
 
-router.post('/search', function(req, res){
+router.route('/search')
+    .post(function(req, res) {
     if(!req.body.searchKey) {
         res.json({success: false, msg: 'Please pass search key.'});
     }
@@ -36,5 +38,5 @@ router.post('/search', function(req, res){
     }
 });
 
-
-app.listen(process.env.PORT || 8080);
+app.use('/', router);
+app.listen(process.env.PORT || 3030);
