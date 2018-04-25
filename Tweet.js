@@ -16,7 +16,7 @@ var TweetSchema = new Schema ({
 });
 
 // getTweets method to return tweets from the database
-schema.statics.getTweets = function(page, skip, callback) {
+TweetSchema.statics.getTweets = function(page, skip, callback) {
 
     // Array of tweets
     var tweets = [];
@@ -27,17 +27,17 @@ schema.statics.getTweets = function(page, skip, callback) {
     Tweet.find({}, 'twid active author avatar body date screenName',
         {skip: start, limit: 10}).sort({date: 'desc'}).exec(function (err, docs) {
 
-            if(!err) { // If there are no errors
-                tweets = docs; // tweets exist
-                tweets.forEach(function(tweet){
-                    tweet.active = true; // Set each tweet to active
-                })
-            }
+        if(!err) { // If there are no errors
+            tweets = docs; // tweets exist
+            tweets.forEach(function(tweet){
+                tweet.active = true; // Set each tweet to active
+            })
+        }
 
-            // Pass tweets back to callback
-            callback(tweets);
+        // Pass tweets back to callback
+        callback(tweets);
     })
 };
 
 // Return a Tweet model based upon the defined schema
-module.exports = Tweet = mongoose.model('Tweet', schema);
+module.exports = Tweet = mongoose.model('Tweet', TweetSchema);
