@@ -40,8 +40,6 @@ TweetSchema.statics.getTweets = function(page, skip, callback) {
 };
 
 // Return a Tweet model based upon the defined schema
-<<<<<<< HEAD
+
 module.exports = Tweet = mongoose.model('Tweet', TweetSchema);
-=======
-module.exports = Tweet = mongoose.model('Tweet', TweetSchema);
->>>>>>> fdf8a21ec45e1c1d1b3ef573b1e0ea48b4581b83
+
