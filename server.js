@@ -38,13 +38,13 @@ router.route('/search')
 
                 var tweetEntry = new Tweet();
 
-                tweetEntry.twid = tweets.statuses[0].id_str;
+                tweetEntry.twid = tweets.statuses.id_str;
                 tweetEntry.active = false;
-                tweetEntry.author = tweets.statuses[0].user.name;
-                tweetEntry.avatar = tweets.statuses[0].user.profile_image_url_https;
-                tweetEntry.body = tweets.statuses[0].text;
-                tweetEntry.date = tweets.statuses[0].created_at;
-                tweetEntry.screenName = tweets.statuses[0].user.screen_name;
+                tweetEntry.author = tweets.statuses.user.name;
+                tweetEntry.avatar = tweets.statuses.user.profile_image_url_https;
+                tweetEntry.body = tweets.statuses.text;
+                tweetEntry.date = tweets.statuses.created_at;
+                tweetEntry.screenName = tweets.statuses.user.screen_name;
 
                 tweetEntry.save(function (err) {
                     if (!err) {
