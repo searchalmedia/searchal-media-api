@@ -36,24 +36,27 @@ router.route('/search')
 
             client.get('search/tweets', {q: key, result_type: 'popular'}, function (error, tweets, response) {
 
-                var tweetEntry = new Tweet();
+                for (i = 0; i < 15; i++) {
+                    var tweetEntry = new Tweet();
 
-                tweetEntry.twid = tweets.statuses.id_str;
-                tweetEntry.active = false;
-                tweetEntry.author = tweets.statuses.user.name;
-                tweetEntry.avatar = tweets.statuses.user.profile_image_url_https;
-                tweetEntry.body = tweets.statuses.text;
-                tweetEntry.date = tweets.statuses.created_at;
-                tweetEntry.screenName = tweets.statuses.user.screen_name;
+                    tweetEntry.twid = tweets.statuses[i].id_str;
+                    tweetEntry.active = false;
+                    tweetEntry.author = tweets.statuses[i].user.name;
+                    tweetEntry.avatar = tweets.statuses[i].user.profile_image_url_https;
+                    tweetEntry.body = tweets.statuses[i].text;
+                    tweetEntry.date = tweets.statuses[i].created_at;
+                    tweetEntry.screenName = tweets.statuses[i].user.screen_name;
 
-                tweetEntry.save(function (err) {
-                    if (!err) {
-                        res.json({message: 'Tweet created!'});
-                    }
-                });
+                    tweetEntry.save(function (err) {
+                        if (!err) {
+                            //res.json({message: 'Tweet created!'});
+                        }
+                    });
+                }
             });
         }
     });
 
 app.use('/', router);
-app.listen(process.env.PORT || 3030);
+app.listen(process.env.PORT || 8080);
+console.log("Listening on port " + (process.env.PORT || 8080));
