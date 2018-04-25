@@ -16,7 +16,7 @@ var TweetSchema = new Schema ({
 });
 
 // getTweets method to return tweets from the database
-schema.statics.getTweets = function(page, skip, callback) {
+TweetSchema.statics.getTweets = function(page, skip, callback) {
 
     // Array of tweets
     var tweets = [];
@@ -40,4 +40,4 @@ schema.statics.getTweets = function(page, skip, callback) {
 };
 
 // Return a Tweet model based upon the defined schema
-module.exports = Tweet = mongoose.model('Tweet', schema);
+module.exports = Tweet = mongoose.model('Tweet', TweetSchema);

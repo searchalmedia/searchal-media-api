@@ -4,6 +4,7 @@ var bodyParser = require('body-parser');
 var Twitter = require('twitter');
 var mongoose = require('mongoose');
 var cors = require('cors');
+var Tweet = require('./Tweet');
 
 // Express instance
 var app = express();
@@ -27,16 +28,32 @@ var client = new Twitter({
 
 router.route('/search')
     .post(function(req, res) {
-    if(!req.body.searchKey) {
-        res.json({success: false, msg: 'Please pass search key.'});
-    }
-    else {
-        var key = req.body.searchKey;
-        client.get('search/tweets', {q: key, result_type: 'popular'}, function(error, tweets, response) {
-            console.log(tweets);
-        });
-    }
-});
+        if (!req.body.searchKey) {
+            res.json({success: false, msg: 'Please pass search key.'});
+        }
+        else {
+            var key = req.body.searchKey;
+
+            client.get('search/tweets', {q: key, result_type: 'popular'}, function (error, tweets, response) {
+
+                var tweetEntry = new Tweet();
+
+                tweetEntry.twid = tweets.statuses[0].id_str;
+                tweetEntry.active = false;
+                tweetEntry.author = tweets.statuses[0].user.name;
+                tweetEntry.avatar = tweets.statuses[0].user.profile_image_url_https;
+                tweetEntry.body = tweets.statuses[0].text;
+                tweetEntry.date = tweets.statuses[0].created_at;
+                tweetEntry.screenName = tweets.statuses[0].user.screen_name;
+
+                tweetEntry.save(function (err) {
+                    if (!err) {
+                        res.json({message: 'Tweet created!'});
+                    }
+                });
+            });
+        }
+    });
 
 app.use('/', router);
 app.listen(process.env.PORT || 3030);
