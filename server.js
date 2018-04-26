@@ -5,6 +5,7 @@ var Twitter = require('twitter');
 var mongoose = require('mongoose');
 var cors = require('cors');
 var Tweet = require('./Tweet');
+var botometer = require('node-botometer');
 
 // Express instance
 var app = express();
@@ -18,14 +19,30 @@ var router = express.Router();
 // Connect to mLab Database
 mongoose.connect(process.env.DB);
 
+// new Twitter instance with auth variables
 var client = new Twitter({
     consumer_key: process.env.CONSUMER_KEY,
     consumer_secret: process.env.CONSUMER_SECRET,
     access_token_key: process.env.ACCESS_TOKEN,
-    access_token_secret: process.env.ACCESS_SECRET
+    access_token_secret: process.env.ACCESS_SECRET,
+    app_only_auth: true
 });
 
+var botmeter = new botometer({
+    consumer_key: process.env.CONSUMER_KEY,
+    consumer_secret: process.env.CONSUMER_SECRET,
+    access_token_key: null,
+    access_token_secret: null,
+    app_only_auth: true,
+    mashape_key: process.env.MASHAPE_KEY,
+    rate_limit: 0,
+    log_progress: true,
+    include_user: true,
+    include_timeline: false,
+    include_mentions: false
+});
 
+// search for tweets route
 router.route('/search')
     .post(function(req, res) {
         if (!req.body.searchKey) {
@@ -56,6 +73,21 @@ router.route('/search')
             });
         }
     });
+
+router.route('/bot')
+    .post(function (req, res) {
+        if (!req.body.userName) {
+            res.json({success: false, msg: 'Please pass username.'});
+        }
+        else {
+            var names = [];
+            names[0] = req.body.userName;
+            botmeter.getBatchBotScores(names, data => {
+                console.log(data);
+            });
+        }
+    });
+
 
 app.use('/', router);
 app.listen(process.env.PORT || 8080);
