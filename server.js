@@ -9,12 +9,12 @@ var botometer = require('node-botometer');
 
 // Express instance
 var app = express();
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // Router instance
 var router = express.Router();
-app.use(cors());
 
 // Connect to mLab Database
 mongoose.connect(process.env.DB);
@@ -66,11 +66,13 @@ router.route('/search')
 
                     tweetEntry.save(function (err) {
                         if (!err) {
-                            //res.json({message: 'Tweet created!'});
+                            res.json({message: 'Created 15 tweets!'});
                         }
                     });
                 }
+
             });
+
         }
     });
 
