@@ -66,9 +66,10 @@ router.route('/search')
 
                     tweetEntry.save(function (err) {
                         if (!err) {
-                            res.json({message: 'Created 15 tweets!'});
+                            //res.json({message: 'Created 15 tweets!'});
                         }
                     });
+                    res.json({message: 'Created 15 tweets!'});
                 }
 
             });
