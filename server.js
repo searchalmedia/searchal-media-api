@@ -69,10 +69,12 @@ router.route('/search')
                             //res.json({message: 'Created 15 tweets!'});
                         }
                     });
-                    res.json({message: 'Created 15 tweets!'});
+
                 }
 
             });
+
+            res.json({success: true, msg: 'created 15 tweets'});
 
         }
     });
