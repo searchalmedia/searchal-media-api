@@ -11,10 +11,10 @@ var botometer = require('node-botometer');
 var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cors());
 
 // Router instance
 var router = express.Router();
+app.use(cors());
 
 // Connect to mLab Database
 mongoose.connect(process.env.DB);
