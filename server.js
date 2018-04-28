@@ -45,6 +45,8 @@ var botmeter = new botometer({
 // search for tweets route
 router.route('/search')
     .post(function(req, res) {
+        var tweetLis = [];
+
         if (!req.body.searchKey) {
             res.json({success: false, msg: 'Please pass search key.'});
         }
@@ -74,12 +76,12 @@ router.route('/search')
 
                     });
                 }
-
+                res.json({success: true, msg: 'created 15 tweets', tweets: tweetList});
             });
 
             //res.json({success: true, msg: 'created 15 tweets'});
         }
-        res.json({success: true, msg: 'created 15 tweets'});
+
     });
 
 router.route('/bot')
