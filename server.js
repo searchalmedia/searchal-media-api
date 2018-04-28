@@ -46,6 +46,8 @@ var botmeter = new botometer({
 
 router.route('/search')
     .post(function(req, res) {
+        var tweetList = [];
+
         if (!req.body.searchKey) {
             res.json({success: false, msg: 'Please pass search key.'});
         }
