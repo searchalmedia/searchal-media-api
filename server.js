@@ -69,7 +69,7 @@ router.route('/search')
                             return res.send(err);
                         }
                         else {
-                            res.json({message: 'Tweet created!'});
+                            //res.json({message: 'Tweet created!'});
                         }
 
                     });
@@ -77,9 +77,9 @@ router.route('/search')
 
             });
 
-            res.json({success: true, msg: 'created 15 tweets'});
-
+            //res.json({success: true, msg: 'created 15 tweets'});
         }
+        res.json({success: true, msg: 'created 15 tweets'});
     });
 
 router.route('/bot')
