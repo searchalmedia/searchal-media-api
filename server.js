@@ -9,9 +9,9 @@ var botometer = require('node-botometer');
 
 // Express instance
 var app = express();
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cors());
 
 // Router instance
 var router = express.Router();
@@ -73,8 +73,13 @@ router.route('/search')
                         }
 
                     });
+
                 }
+
             });
+
+            res.json({success: true, msg: 'created 15 tweets'});
+
         }
     });
 
