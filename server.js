@@ -45,14 +45,13 @@ var botmeter = new botometer({
 // search for tweets route
 
 router.route('/search')
-    .post(function(req, res) {
-        var tweetList = [];
+    .get(function(req, res) {
 
-        if (!req.body.searchKey) {
+        if (!req.query.q) {
             res.json({success: false, msg: 'Please pass search key.'});
         }
         else {
-            var key = req.body.searchKey;
+            var key = req.query.q;
 
             client.get('search/tweets', {q: key, result_type: 'popular'}, function (error, tweets, response) {
 
