@@ -43,6 +43,7 @@ var botmeter = new botometer({
 });
 
 // search for tweets route
+
 router.route('/search')
     .post(function(req, res) {
         if (!req.body.searchKey) {
@@ -53,36 +54,32 @@ router.route('/search')
 
             client.get('search/tweets', {q: key, result_type: 'popular'}, function (error, tweets, response) {
 
-                for (i = 0; i < 15; i++) {
-                    var tweetEntry = new Tweet();
+                tweets.statuses.forEach(function(tweets){
 
-                    tweetEntry.twid = tweets.statuses[i].id_str;
+                    tweetEntry = new Tweet();
+
+                    tweetEntry.twid = tweets.id_str;
                     tweetEntry.active = false;
-                    tweetEntry.author = tweets.statuses[i].user.name;
-                    tweetEntry.avatar = tweets.statuses[i].user.profile_image_url_https;
-                    tweetEntry.body = tweets.statuses[i].text;
-                    tweetEntry.date = tweets.statuses[i].created_at;
-                    tweetEntry.screenName = tweets.statuses[i].user.screen_name;
+                    tweetEntry.author = tweets.user.name;
+                    tweetEntry.avatar = tweets.user.profile_image_url_https;
+                    tweetEntry.body = tweets.text;
+                    tweetEntry.date = tweets.created_at;
+                    tweetEntry.screenName = tweets.user.screen_name;
 
-                    tweetEntry.save(function (err) {
+                    tweetEntry.save(function(err) {
                         if (err) {
                             return res.send(err);
                         }
-                        else {
-                            res.json({message: 'Tweet created!'});
-                        }
-
                     });
+                });
 
-                }
+                res.json({ success: true, message: 'Tweets created!'});
 
             });
-
-            res.json({success: true, msg: 'created 15 tweets'});
-
         }
     });
 
+/*
 router.route('/bot')
     .post(function (req, res) {
         if (!req.body.userName) {
@@ -96,7 +93,7 @@ router.route('/bot')
             });
         }
     });
-
+*/
 
 app.use('/', router);
 app.listen(process.env.PORT || 8080);
