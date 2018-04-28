@@ -65,17 +65,19 @@ router.route('/search')
                     tweetEntry.screenName = tweets.statuses[i].user.screen_name;
 
                     tweetEntry.save(function (err) {
-                        if (!err) {
-                            //res.json({message: 'Created 15 tweets!'});
+                        if (err) {
+                            return res.send(err);
                         }
-                    });
+                        else {
+                            res.json({message: 'Tweet created!'});
+                        }
 
+                    });
                 }
 
             });
 
             res.json({success: true, msg: 'created 15 tweets'});
-
         }
     });
 
