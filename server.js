@@ -44,7 +44,7 @@ var botmeter = new botometer({
 
 // search for tweets route
 
-router.route('/search')
+router.route('/')
     .get(function(req, res) {
 
         if (!req.query.q) {
