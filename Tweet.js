@@ -6,13 +6,19 @@ mongoose.connect(process.env.DB);
 
 // Tweet Schema
 var TweetSchema = new Schema ({
-    twid       : String,
-    active     : Boolean,
-    author     : String,
-    avatar     : String,
-    body       : String,
-    date       : Date,
-    screenName : String
+    twid          : String,
+    author        : String,
+    avatar        : String,
+    body          : String,
+    date          : Date,
+    screenName    : String,
+    favorites     : Number,
+    retweets      : Number
+    /*media         : String,
+    urls          : String,
+    user_mentions : String,
+    hashtags      : String,
+    symbols       : String*/
 });
 
 // getTweets method to return tweets from the database
