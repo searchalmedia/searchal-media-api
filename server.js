@@ -80,6 +80,26 @@ router.route('/')
         }
     });
 
+router.route('/tweets')
+    .get(function (req, res) {
+        Tweet.find(function (err, tweets) {
+            if (err)
+                res.send(err);
+            else
+                res.json(tweets);
+        });
+    });
+
+router.route('/tweets/:tweetId')
+    .get(function (req, res) {
+        Tweet.findById(req.params.tweetId, function(err, tweet) {
+            if (err)
+                res.send(err);
+            else
+                res.json(tweet);
+        });
+    });
+
 /*
 router.route('/bot')
     .post(function (req, res) {
