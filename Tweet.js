@@ -7,6 +7,7 @@ mongoose.connect(process.env.DB);
 // Tweet Schema
 var TweetSchema = new Schema ({
     twid          : String,
+    active        : Boolean,
     author        : String,
     avatar        : String,
     body          : String,
