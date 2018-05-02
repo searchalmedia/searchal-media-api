@@ -106,7 +106,7 @@ router.route('/tweets/:tweetId')
     });
 
 
-router.route('/tweets')
+router.route('/botscore')
     .get(function (req, res) {
         if (!req.query.q) {
             res.json({success: false, msg: 'Please pass username.'});
