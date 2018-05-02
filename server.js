@@ -115,7 +115,6 @@ router.route('/botscore')
             var names = [];
             names[0] = req.query.q;
             botmeter.getBatchBotScores(names, data => {
-                console.log(data);
 
                 botEntry = new BotScore();
 
@@ -136,6 +135,16 @@ router.route('/botscore')
 
             res.json({ success: true, message: 'Bot score created!'});
         }
+    });
+
+router.route('/botscore')
+    .get(function (req, res) {
+        BotScore.find(function (err, botscores) {
+            if (err)
+                res.send(err);
+            else
+                res.json(botscores);
+        });
     });
 
 
