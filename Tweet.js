@@ -15,11 +15,6 @@ var TweetSchema = new Schema ({
     screenName    : String,
     favorites     : Number,
     retweets      : Number
-    /*media         : String,
-    urls          : String,
-    user_mentions : String,
-    hashtags      : String,
-    symbols       : String*/
 });
 
 // getTweets method to return tweets from the database
