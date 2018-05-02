@@ -53,7 +53,7 @@ router.route('/')
         else {
             var key = req.query.q;
 
-            client.get('search/tweets', {q: key, result_type: 'popular', lang: en}, function (error, tweets, response) {
+            client.get('search/tweets', {q: key, result_type: 'popular'}, function (error, tweets, response) {
 
                 tweets.statuses.forEach(function(tweets){
 
