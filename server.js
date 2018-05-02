@@ -5,6 +5,7 @@ var Twitter = require('twitter');
 var mongoose = require('mongoose');
 var cors = require('cors');
 var Tweet = require('./Tweet');
+var BotScore = require('./BotScore');
 var botometer = require('node-botometer');
 
 // Express instance
@@ -104,21 +105,39 @@ router.route('/tweets/:tweetId')
         });
     });
 
-/*
-router.route('/bot')
-    .post(function (req, res) {
-        if (!req.body.userName) {
+
+router.route('/botscore')
+    .get(function (req, res) {
+        if (!req.query.q) {
             res.json({success: false, msg: 'Please pass username.'});
         }
         else {
             var names = [];
-            names[0] = req.body.userName;
+            names[0] = req.query.q;
             botmeter.getBatchBotScores(names, data => {
                 console.log(data);
+
+                botEntry = new BotScore();
+
+                botEntry.score = data[0].botometer.scores.universal;
+                botEntry.friend = data[0].botometer.categories.friend;
+                botEntry.sentiment = data[0].botometer.categories.sentiment;
+                botEntry.temporal = data[0].botometer.categories.temporal;
+                botEntry.user = data[0].botometer.user.screen_name;
+                botEntry.network = data[0].botometer.categories.network;
+                botEntry.content = data[0].botometer.categories.content;
+
+                botEntry.save(function(err) {
+                    if (err) {
+                        return res.send(err);
+                        }
+                });
             });
+
+            res.json({ success: true, message: 'Bot score created!'});
         }
     });
-*/
+
 
 app.use('/', router);
 app.listen(process.env.PORT || 8080);
