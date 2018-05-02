@@ -53,7 +53,7 @@ router.route('/')
         else {
             var key = req.query.q;
 
-            client.get('search/tweets', {q: key, result_type: 'popular'}, function (error, tweets, response) {
+            client.get('search/tweets', {q: key, result_type: 'popular', lang: en}, function (error, tweets, response) {
 
                 tweets.statuses.forEach(function(tweets){
 
@@ -66,10 +66,10 @@ router.route('/')
                     tweetEntry.body = tweets.text;
                     tweetEntry.date = tweets.created_at;
                     tweetEntry.screenName = tweets.user.screen_name;
-                    tweetEntry.favorites = tweets.user.favorites;
-                    tweetEntry.retweets  = tweets.user.retweets;
-                    /*tweetEntry.media = tweets.extended_entities.media.media_url_https;
-                    tweetEntry.urls = tweets.extended_entities.urls.display_url;
+                    tweetEntry.favorites = tweets.favorite_count;
+                    tweetEntry.retweets  = tweets.retweet_count;
+                    /*tweetEntry.media = tweets.entities.media.media_url_https;
+                    tweetEntry.urls = tweets.entities.urls.display_url;
                     tweetEntry. user_mentions = tweets.entities.user_mentions.screen_name;
                     tweetEntry.hashtags = tweets.entities.hashtags.text;
                     tweetEntry.symbols = tweets.entities.symbols.text;*/
